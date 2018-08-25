@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>Best Seller Book in real-time</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h3 style="color:blue">Best Seller Book in real-time</h3>
+
+    <div class="col-sm-7" id="postResultDiv">
+    </div>
+
+    <div class="col-sm-7" style="margin:20px 0px 20px 0px">
+        <button id="getAllProduct" type="button" class="btn btn-primary">Get Top Book</button>
+        <div id="getResultDiv" style="padding:20px 10px 20px 50px">
+            <ul class="list-group">
+            </ul>
+            <img id="profileImage" name="profileImage" src=""/>
+        </div>
+        <button id="home" type="button" class="btn btn-secondary" onclick="doRedirect();">Home</button>
+    </div>
+
+</div>
+<script type="text/javascript">
+    function doRedirect() {
+        window.location.href = '/productList';
+    }
+</script>
+</body>
+</html>
