@@ -8,7 +8,7 @@ import ua.artem.sbshoppingcart.model.CartInfo;
 import ua.artem.sbshoppingcart.model.CustomerInfo;
 import ua.artem.sbshoppingcart.model.ProductInfo;
 import ua.artem.sbshoppingcart.pagination.PaginationResult;
-import ua.artem.sbshoppingcart.utils.Utils;
+import ua.artem.sbshoppingcart.utils.SessionUtils;
 import ua.artem.sbshoppingcart.validator.CustomerFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -95,7 +95,7 @@ public class MainController {
         if (product != null) {
 
             //
-            CartInfo cartInfo = Utils.getCartInSession(request);
+            CartInfo cartInfo = SessionUtils.getCartInSession(request);
 
             ProductInfo productInfo = new ProductInfo(product);
 
@@ -114,7 +114,7 @@ public class MainController {
         }
         if (product != null) {
 
-            CartInfo cartInfo = Utils.getCartInSession(request);
+            CartInfo cartInfo = SessionUtils.getCartInSession(request);
 
             ProductInfo productInfo = new ProductInfo(product);
 
@@ -131,7 +131,7 @@ public class MainController {
                                         Model model, //
                                         @ModelAttribute("cartForm") CartInfo cartForm) {
 
-        CartInfo cartInfo = Utils.getCartInSession(request);
+        CartInfo cartInfo = SessionUtils.getCartInSession(request);
         cartInfo.updateQuantity(cartForm);
 
         return "redirect:/shoppingCart";
@@ -140,7 +140,7 @@ public class MainController {
     // GET: Show cart.
     @RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.GET)
     public String shoppingCartHandler(HttpServletRequest request, Model model) {
-        CartInfo myCart = Utils.getCartInSession(request);
+        CartInfo myCart = SessionUtils.getCartInSession(request);
 
         model.addAttribute("cartForm", myCart);
         return "shoppingCart";
@@ -150,7 +150,7 @@ public class MainController {
     @RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.GET)
     public String shoppingCartCustomerForm(HttpServletRequest request, Model model) {
 
-        CartInfo cartInfo = Utils.getCartInSession(request);
+        CartInfo cartInfo = SessionUtils.getCartInSession(request);
 
         if (cartInfo.isEmpty()) {
 
@@ -180,7 +180,7 @@ public class MainController {
         }
 
         customerForm.setValid(true);
-        CartInfo cartInfo = Utils.getCartInSession(request);
+        CartInfo cartInfo = SessionUtils.getCartInSession(request);
         CustomerInfo customerInfo = new CustomerInfo(customerForm);
         cartInfo.setCustomerInfo(customerInfo);
 
@@ -190,7 +190,7 @@ public class MainController {
     // GET: Show information to confirm.
     @RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
     public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
-        CartInfo cartInfo = Utils.getCartInSession(request);
+        CartInfo cartInfo = SessionUtils.getCartInSession(request);
 
         if (cartInfo == null || cartInfo.isEmpty()) {
 
@@ -208,7 +208,7 @@ public class MainController {
     @RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.POST)
 
     public String shoppingCartConfirmationSave(HttpServletRequest request, Model model) {
-        CartInfo cartInfo = Utils.getCartInSession(request);
+        CartInfo cartInfo = SessionUtils.getCartInSession(request);
 
         if (cartInfo.isEmpty()) {
 
@@ -225,10 +225,10 @@ public class MainController {
         }
 
         // Remove Cart from Session.
-        Utils.removeCartInSession(request);
+        SessionUtils.removeCartInSession(request);
 
         // Store last cart.
-        Utils.storeLastOrderedCartInSession(request, cartInfo);
+        SessionUtils.storeLastOrderedCartInSession(request, cartInfo);
 
         return "redirect:/shoppingCartFinalize";
     }
@@ -236,7 +236,7 @@ public class MainController {
     @RequestMapping(value = { "/shoppingCartFinalize" }, method = RequestMethod.GET)
     public String shoppingCartFinalize(HttpServletRequest request, Model model) {
 
-        CartInfo lastOrderedCart = Utils.getLastOrderedCartInSession(request);
+        CartInfo lastOrderedCart = SessionUtils.getLastOrderedCartInSession(request);
 
         if (lastOrderedCart == null) {
             return "redirect:/shoppingCart";

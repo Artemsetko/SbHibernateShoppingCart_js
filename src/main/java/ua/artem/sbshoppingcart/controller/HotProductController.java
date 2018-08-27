@@ -26,15 +26,15 @@ public class HotProductController {
     private ProductDAO productDAO;
 
 
-    List<TopProduct> cust = new ArrayList<>();
+    List<TopProduct> prod = new ArrayList<>();
 
     @GetMapping(value = "/result")
     public Response getResult() {
         Product product = productDAO.hotProduct();
         TopProduct topProduct = new TopProduct(product.getCode(), product.getName(), product.getPrice());
-        cust.add(topProduct);
+        prod.add(topProduct);
         System.out.println(topProduct.getCode());
-        Response response = new Response("Done", cust);
+        Response response = new Response("Done", prod);
         return response;
     }
 

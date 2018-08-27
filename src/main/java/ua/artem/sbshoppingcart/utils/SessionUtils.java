@@ -4,7 +4,7 @@ import ua.artem.sbshoppingcart.model.CartInfo;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Utils {
+public class SessionUtils {
 
     // Products in the cart, stored in Session.
     public static CartInfo getCartInSession(HttpServletRequest request) {
